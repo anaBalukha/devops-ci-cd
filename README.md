@@ -1,71 +1,71 @@
-# CI/CD Pipeline Assignment
+# about project
+This project demonstrates a complete CI/CD (Continuous Integration and Continuous Deployment) pipeline using a simple Node.js application.
+The focus of this project is not on application complexity, but on automating the software delivery lifecycle — from code commit to production deployment — while ensuring quality through automated testing.
 
-## Live Application
+This project successfully demonstrates a complete DevOps pipeline where: code is automatically tested, only valid code is deployed, deployment is fully automated and failures are prevented early
+
+The system ensures reliability, automation, and maintainability which are key principles of modern software engineering.
+
+# Live Application:
+Access the deployed application here:
 
 https://devops-ci-cd-1egp.onrender.com
 
----
+# Continuous Integration (CI)
+Every time code is pushed to the repository:
+Dependencies are installed
+Tests are executed automatically
 
-## Project Description
+i implemented it using GitHub Actions and Workflow file is located at:
+.github/workflows/main.yml
 
-This project demonstrates a complete CI/CD pipeline using Node.js, GitHub Actions, and Render.
+# Pipeline Steps:
+ 1.Checkout repository code
+ 2.Install Node.js environment
+ 3.Run: npm install
+ 4.Execute tests: npx jest
 
----
-
-## Continuous Integration (CI)
-
-* Implemented using GitHub Actions
-* Triggered on every push and pull request
-* Steps:
-
-  1. Install dependencies (`npm install`)
-  2. Run automated tests (`jest`)
-* If tests fail, deployment is blocked
-
----
-
-## Continuous Deployment (CD)
-
-* Deployed using Render
-* Connected to GitHub repository
-* Automatic deployment on successful push
-
----
-
-## Deployment Strategy
-
-**Strategy Used: Recreate (Simple Deployment)**
-
-Explanation:
-
-* Each deployment replaces the previous version completely
-* Suitable for small applications and free-tier hosting
-* Ensures a clean environment on every deploy
-
----
-
-## Rollback Strategy
-
-If a bug is found:
-
-1. Go to GitHub repository
-2. Revert to previous working commit
-3. Push the change:
-
-   ```
-   git revert <commit-id>
-   git push
-   ```
-4. Render will automatically redeploy the stable version
-
----
+ If tests fail, the pipeline:
+   1.Stops immediately
+   2.Prevents deployment
+ If tests pass:
+   1.Pipeline continues
+   2.Deployment is triggered
 
 
-* GitHub Actions successful run
-* Live application running
+# Continuous Deployment (CD)
+my application is deployed using render
 
----
+render is connected to the GitHub repository, every push to the main branch triggers deployment,
+deployment occurs only after code is successfully pushed (after CI passes locally)
+1.push code to GitHub
+2.CI pipeline runs tests
+    If tests pass:
+          3.render automatically deploys the latest version
+4.application becomes live
 
-## Conclusion
 
-This project successfully implements a CI/CD pipeline with automated testing and deployment, ensuring reliable and efficient software delivery.
+# Deployment Strategy Used: Recreate
+The Recreate strategy replaces the current running version with a new version:
+             1.old version of the application is stopped
+             2.new version is deployed
+             3.new version starts running
+
+i choose this strategy because it's: suitable for small applications, supported by free-tier hosting platforms and is simple and effective for this project
+
+
+# Rollback Protocol:
+In case a bug is discovered in production, the application can be reverted to a previous stable version.
+
+# Steps to Rollback:
+  1.go to GitHub repository
+  2.open Commits history
+  3.select the last stable commit
+  4.click Revert
+  5.push the reverted commit by git push
+  6.render automatically redeploys the previous working version
+
+#  Testing
+   Framework: Jest
+   Test Example: Verifies that the main route (/) returns expected response
+   Run tests locally: npm test
